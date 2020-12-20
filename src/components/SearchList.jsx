@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 
 import Cards from '../components/Cards';
 
@@ -9,19 +10,34 @@ import { prepareBookList } from '../helper/books';
 export default function SearchList() {
   const { criteria } = useParams();
   const [books, setBooks] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const renderElements = () => {
+    if (isSearching) {
+      return <Spinner animation="border" />;
+    }
+
+    if (books.length === 0) {
+      return <div>Nenhum livro encontrado</div>;
+    }
+
+    return <Cards books={books} />;
+  };
 
   useEffect(() => {
+    setIsSearching(true);
     api.search(criteria).then((data) => {
       const listOfBooks = prepareBookList(data);
 
       setBooks(listOfBooks);
+      setIsSearching(false);
     });
-  }, [criteria]);
+  }, [criteria, setIsSearching]);
 
   return (
     <>
       <h1>Pesquisa de Livros</h1>
-      <Cards books={books} />
+      {renderElements()}
     </>
   );
 }
