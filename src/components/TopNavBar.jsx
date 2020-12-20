@@ -14,6 +14,10 @@ export default function TopNavBar() {
     setCriteria('');
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <LinkContainer to="/">
@@ -22,7 +26,7 @@ export default function TopNavBar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto"></Nav>
-        <Form inline>
+        <Form inline onSubmit={handleSubmit}>
           <FormControl
             type="text"
             placeholder="Search"

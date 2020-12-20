@@ -5,9 +5,9 @@ export default function Cards(props) {
     ? props.books
     : props.books.filter((book) => book.shelf === props.shelf);
 
-  const cards = books.map((book, index) => {
+  const cards = books.map((book) => {
     return (
-      <Card style={{ width: '18rem' }} key={index}>
+      <Card style={{ width: '18rem' }} key={book.id}>
         <Card.Img
           variant="top"
           src={book.image}

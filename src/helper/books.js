@@ -5,6 +5,7 @@ export const prepareBookList = (books) => {
 
   return books.map((book) => {
     return {
+      id: book.id,
       title: book.title,
       authors: !!book.authors ? book.authors.join(', ') : '',
       shelf: book.shelf,
