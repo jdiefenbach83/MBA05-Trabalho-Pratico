@@ -1,11 +1,19 @@
-import { useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 
 import TopNavBar from './components/TopNavBar';
 import Cards from './components/Cards';
+import SearchList from './components/SearchList';
 
 import * as api from './api/books';
+import { prepareBookList } from './helper/books';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -15,30 +23,42 @@ function App() {
 
   useEffect(() => {
     api.getAll().then((data) => {
-      const listOfBooks = data.map((book) => {
-        return {
-          title: book.title,
-          authors: book.authors.join(', '),
-          shelf: book.shelf,
-          image: book.imageLinks.smallThumbnail,
-        };
-      });
-
+      const listOfBooks = prepareBookList(data);
       setBooks(listOfBooks);
     });
-  }, [books]);
+  }, []);
 
   return (
     <>
-      <TopNavBar />
-      <Container>
-        <h1>Lendo atualmente</h1>
-        <Cards books={books} shelf="currentlyReading" />
-        <h1>Quero ler</h1>
-        <Cards books={books} shelf="wantToRead" />
-        <h1>Leitura concluída</h1>
-        <Cards books={books} shelf="read" />
-      </Container>
+      <Router>
+        <TopNavBar />
+        <div className="App">
+          <Container>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <>
+                    <h1>Lendo atualmente</h1>
+                    <Cards books={books} shelf="currentlyReading" />
+                    <h1>Quero ler</h1>
+                    <Cards books={books} shelf="wantToRead" />
+                    <h1>Leitura concluída</h1>
+                    <Cards books={books} shelf="read" />
+                  </>
+                )}
+              />
+              <Route
+                exact
+                path="/search/:criteria"
+                render={() => <SearchList />}
+              />
+              <Redirect to="/" />
+            </Switch>
+          </Container>
+        </div>
+      </Router>
     </>
   );
 }

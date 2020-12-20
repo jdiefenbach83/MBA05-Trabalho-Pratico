@@ -1,11 +1,13 @@
 import { Card, Button, CardColumns } from 'react-bootstrap';
 
 export default function Cards(props) {
-  const books = props.books.filter((book) => book.shelf === props.shelf);
+  const books = !props.shelf
+    ? props.books
+    : props.books.filter((book) => book.shelf === props.shelf);
 
-  const cards = books.map((book) => {
+  const cards = books.map((book, index) => {
     return (
-      <Card style={{ width: '18rem' }}>
+      <Card style={{ width: '18rem' }} key={index}>
         <Card.Img
           variant="top"
           src={book.image}
