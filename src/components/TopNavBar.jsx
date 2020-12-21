@@ -1,10 +1,12 @@
 import { React, useState } from 'react';
 import { Nav, Navbar, Form, FormControl, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 
 export default function TopNavBar() {
   const [criteria, setCriteria] = useState('');
+
+  let history = useHistory();
 
   const handleCriteriaChange = (e) => {
     setCriteria(e.target.value);
@@ -16,6 +18,9 @@ export default function TopNavBar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    history.push(`/search/${criteria}`);
+    setCriteria('');
   };
 
   return (
