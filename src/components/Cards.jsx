@@ -1,11 +1,14 @@
-import { Card, Button, CardColumns } from 'react-bootstrap';
+import { Card, CardColumns } from 'react-bootstrap';
+import ActionButtons from './ActionButtons';
 
-export default function Cards(props) {
-  const books = !props.shelf
-    ? props.books
-    : props.books.filter((book) => book.shelf === props.shelf);
+export default function Cards({ books, shelf, currentBooks }) {
+  const localBooks = !shelf
+    ? books
+    : books.filter((book) => book.shelf === shelf);
 
-  const cards = books.map((book) => {
+  const cards = localBooks.map((book) => {
+    const currentBook = currentBooks?.find((item) => item.id === book.id);
+
     return (
       <Card style={{ width: '18rem' }} key={book.id}>
         <Card.Img
@@ -17,6 +20,9 @@ export default function Cards(props) {
           <Card.Title>{book.title}</Card.Title>
           <Card.Text>{book.authors}</Card.Text>
         </Card.Body>
+        <Card.Footer>
+          <ActionButtons book={book} currentBook={currentBook} />
+        </Card.Footer>
       </Card>
     );
   });

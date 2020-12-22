@@ -52,7 +52,7 @@ function App() {
               <Route
                 exact
                 path="/search/:criteria"
-                render={() => <SearchList />}
+                render={() => <SearchList currentBooks={books} />}
               />
               <Redirect to="/" />
             </Switch>

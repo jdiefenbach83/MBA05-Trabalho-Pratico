@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 
-import Cards from '../components/Cards';
+import Cards from './Cards';
 
 import * as api from '../api/books';
 import { prepareBookList } from '../helper/books';
 
-export default function SearchList() {
+export default function SearchList({ currentBooks }) {
   const { criteria } = useParams();
   const [books, setBooks] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -21,7 +21,7 @@ export default function SearchList() {
       return <div>Nenhum livro encontrado</div>;
     }
 
-    return <Cards books={books} />;
+    return <Cards books={books} currentBooks={currentBooks} />;
   };
 
   useEffect(() => {
