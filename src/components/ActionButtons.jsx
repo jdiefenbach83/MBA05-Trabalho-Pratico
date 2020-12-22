@@ -1,5 +1,7 @@
 import { React, useState, useEffect } from 'react';
-import { BsFillBookmarkFill, BsFillTrashFill } from 'react-icons/bs';
+import { BsFillBookmarkFill } from 'react-icons/bs';
+
+import * as api from '../api/books';
 
 export default function ActionButtons({ book, currentBook }) {
   const [currentShelf, setCurrentShelf] = useState('');
@@ -7,7 +9,6 @@ export default function ActionButtons({ book, currentBook }) {
   const [isCurrentlyReading, setCurrentlyReading] = useState(false);
   const [isWantToRead, setWantToRead] = useState(false);
   const [isRead, setRead] = useState(false);
-  const [canRemove, setCanRemove] = useState(false);
 
   useEffect(() => {
     if (!!currentBook) {
@@ -24,7 +25,6 @@ export default function ActionButtons({ book, currentBook }) {
       setCurrentlyReading(false);
       setWantToRead(false);
       setRead(false);
-      setCanRemove(false);
 
       return;
     }
@@ -33,7 +33,6 @@ export default function ActionButtons({ book, currentBook }) {
       setCurrentlyReading(true);
       setWantToRead(false);
       setRead(false);
-      setCanRemove(true);
 
       return;
     }
@@ -42,7 +41,6 @@ export default function ActionButtons({ book, currentBook }) {
       setCurrentlyReading(false);
       setWantToRead(true);
       setRead(false);
-      setCanRemove(true);
 
       return;
     }
@@ -51,26 +49,37 @@ export default function ActionButtons({ book, currentBook }) {
       setCurrentlyReading(false);
       setWantToRead(false);
       setRead(true);
-      setCanRemove(true);
 
       return;
     }
   }, [currentShelf]);
 
+  const updateShelf = (shelf) => {
+    api.update(book, shelf).then((data) => {
+      console.log(book.id);
+      console.log(shelf);
+      console.log(data);
+    });
+  };
+
   const handleAddToCurrentlyReading = (e) => {
     setCurrentShelf('currentlyReading');
+    updateShelf('currentlyReading');
   };
 
   const handleAddToWantToRead = (e) => {
     setCurrentShelf('wantToRead');
+    updateShelf('wantToRead');
   };
 
   const handleAddToRead = (e) => {
     setCurrentShelf('read');
+    updateShelf('read');
   };
 
   const handleRemoveFromBooks = (e) => {
     setCurrentShelf('');
+    updateShelf(null);
   };
 
   return (
@@ -84,6 +93,7 @@ export default function ActionButtons({ book, currentBook }) {
         }
         onClick={handleAddToCurrentlyReading}
         disabled={isCurrentlyReading}
+        title="Lendo atualmente"
       >
         <BsFillBookmarkFill />
       </button>
@@ -96,6 +106,7 @@ export default function ActionButtons({ book, currentBook }) {
         }
         onClick={handleAddToWantToRead}
         disabled={isWantToRead}
+        title="Quero ler"
       >
         <BsFillBookmarkFill />
       </button>
@@ -108,20 +119,9 @@ export default function ActionButtons({ book, currentBook }) {
         }
         onClick={handleAddToRead}
         disabled={isRead}
+        title="Leitura concluída"
       >
         <BsFillBookmarkFill />
-      </button>
-      <button
-        type="button"
-        style={
-          canRemove
-            ? { ...styles.actionButton, ...styles.bookToRemove }
-            : { ...styles.actionButton, ...styles.greyButton }
-        }
-        onClick={handleRemoveFromBooks}
-        disabled={!canRemove}
-      >
-        <BsFillTrashFill />
       </button>
     </>
   );
@@ -146,8 +146,5 @@ const styles = {
   },
   bookRead: {
     color: 'green',
-  },
-  bookToRemove: {
-    color: 'red',
   },
 };
