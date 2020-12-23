@@ -1,7 +1,7 @@
 import { Card, CardColumns } from 'react-bootstrap';
 import ActionButtons from './ActionButtons';
 
-export default function Cards({ books, shelf, currentBooks }) {
+export default function Cards({ books, shelf, currentBooks, updateOneBook }) {
   const localBooks = !shelf
     ? books
     : books.filter((book) => book.shelf === shelf);
@@ -21,7 +21,11 @@ export default function Cards({ books, shelf, currentBooks }) {
           <Card.Text>{book.authors}</Card.Text>
         </Card.Body>
         <Card.Footer>
-          <ActionButtons book={book} currentBook={currentBook} />
+          <ActionButtons
+            book={book}
+            currentBook={currentBook}
+            updateOneBook={updateOneBook}
+          />
         </Card.Footer>
       </Card>
     );

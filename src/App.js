@@ -9,7 +9,8 @@ import {
 import Container from 'react-bootstrap/Container';
 
 import TopNavBar from './components/TopNavBar';
-import Cards from './components/Cards';
+import Shelfs from './components/Shelfs';
+
 import SearchList from './components/SearchList';
 
 import * as api from './api/books';
@@ -19,14 +20,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
-  const [books, setBooks] = useState([]);
+  const [globalBooks, setGlobalBooks] = useState([]);
 
   useEffect(() => {
     api.getAll().then((data) => {
       const listOfBooks = prepareBookList(data);
-      setBooks(listOfBooks);
+      setGlobalBooks(listOfBooks);
     });
   }, []);
+
+  const updateOneBook = (book) => {
+    const filteredBooks = globalBooks.filter((item) => item.id !== book.id);
+
+    setGlobalBooks([...filteredBooks, book]);
+  };
 
   return (
     <>
@@ -39,20 +46,21 @@ function App() {
                 exact
                 path="/"
                 render={() => (
-                  <>
-                    <h1>Lendo atualmente</h1>
-                    <Cards books={books} shelf="currentlyReading" />
-                    <h1>Quero ler</h1>
-                    <Cards books={books} shelf="wantToRead" />
-                    <h1>Leitura concluída</h1>
-                    <Cards books={books} shelf="read" />
-                  </>
+                  <Shelfs
+                    currentBooks={globalBooks}
+                    updateOneBook={updateOneBook}
+                  />
                 )}
               />
               <Route
                 exact
                 path="/search/:criteria"
-                render={() => <SearchList currentBooks={books} />}
+                render={() => (
+                  <SearchList
+                    currentBooks={globalBooks}
+                    updateOneBook={updateOneBook}
+                  />
+                )}
               />
               <Redirect to="/" />
             </Switch>

@@ -1,14 +1,17 @@
 import { React, useState, useEffect } from 'react';
 import { BsFillBookmarkFill } from 'react-icons/bs';
+import Spinner from 'react-bootstrap/Spinner';
 
 import * as api from '../api/books';
 
-export default function ActionButtons({ book, currentBook }) {
+export default function ActionButtons({ book, currentBook, updateOneBook }) {
   const [currentShelf, setCurrentShelf] = useState('');
 
   const [isCurrentlyReading, setCurrentlyReading] = useState(false);
   const [isWantToRead, setWantToRead] = useState(false);
   const [isRead, setRead] = useState(false);
+
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     if (!!currentBook) {
@@ -55,10 +58,14 @@ export default function ActionButtons({ book, currentBook }) {
   }, [currentShelf]);
 
   const updateShelf = (shelf) => {
+    setIsUpdating(true);
+
     api.update(book, shelf).then((data) => {
-      console.log(book.id);
-      console.log(shelf);
-      console.log(data);
+      const updatedBook = Object.assign({}, book);
+      updatedBook.shelf = shelf;
+
+      updateOneBook(updatedBook);
+      setIsUpdating(false);
     });
   };
 
@@ -77,52 +84,50 @@ export default function ActionButtons({ book, currentBook }) {
     updateShelf('read');
   };
 
-  const handleRemoveFromBooks = (e) => {
-    setCurrentShelf('');
-    updateShelf(null);
-  };
-
   return (
     <>
-      <button
-        type="button"
-        style={
-          isCurrentlyReading
-            ? { ...styles.actionButton, ...styles.bookCurrentlyReading }
-            : { ...styles.actionButton, ...styles.greyButton }
-        }
-        onClick={handleAddToCurrentlyReading}
-        disabled={isCurrentlyReading}
-        title="Lendo atualmente"
-      >
-        <BsFillBookmarkFill />
-      </button>
-      <button
-        type="button"
-        style={
-          isWantToRead
-            ? { ...styles.actionButton, ...styles.bookWantToRead }
-            : { ...styles.actionButton, ...styles.greyButton }
-        }
-        onClick={handleAddToWantToRead}
-        disabled={isWantToRead}
-        title="Quero ler"
-      >
-        <BsFillBookmarkFill />
-      </button>
-      <button
-        type="button"
-        style={
-          isRead
-            ? { ...styles.actionButton, ...styles.bookRead }
-            : { ...styles.actionButton, ...styles.greyButton }
-        }
-        onClick={handleAddToRead}
-        disabled={isRead}
-        title="Leitura concluída"
-      >
-        <BsFillBookmarkFill />
-      </button>
+      <div>
+        <button
+          type="button"
+          style={
+            isCurrentlyReading
+              ? { ...styles.actionButton, ...styles.bookCurrentlyReading }
+              : { ...styles.actionButton, ...styles.greyButton }
+          }
+          onClick={handleAddToCurrentlyReading}
+          disabled={isCurrentlyReading}
+          title="Lendo atualmente"
+        >
+          <BsFillBookmarkFill />
+        </button>
+        <button
+          type="button"
+          style={
+            isWantToRead
+              ? { ...styles.actionButton, ...styles.bookWantToRead }
+              : { ...styles.actionButton, ...styles.greyButton }
+          }
+          onClick={handleAddToWantToRead}
+          disabled={isWantToRead}
+          title="Quero ler"
+        >
+          <BsFillBookmarkFill />
+        </button>
+        <button
+          type="button"
+          style={
+            isRead
+              ? { ...styles.actionButton, ...styles.bookRead }
+              : { ...styles.actionButton, ...styles.greyButton }
+          }
+          onClick={handleAddToRead}
+          disabled={isRead}
+          title="Leitura concluída"
+        >
+          <BsFillBookmarkFill />
+        </button>
+      </div>
+      {isUpdating && <Spinner animation="border" />}
     </>
   );
 }

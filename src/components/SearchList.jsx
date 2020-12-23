@@ -7,7 +7,7 @@ import Cards from './Cards';
 import * as api from '../api/books';
 import { prepareBookList } from '../helper/books';
 
-export default function SearchList({ currentBooks }) {
+export default function SearchList({ currentBooks, updateOneBook }) {
   const { criteria } = useParams();
   const [books, setBooks] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -21,7 +21,13 @@ export default function SearchList({ currentBooks }) {
       return <div>Nenhum livro encontrado</div>;
     }
 
-    return <Cards books={books} currentBooks={currentBooks} />;
+    return (
+      <Cards
+        books={books}
+        currentBooks={currentBooks}
+        updateOneBook={updateOneBook}
+      />
+    );
   };
 
   useEffect(() => {
