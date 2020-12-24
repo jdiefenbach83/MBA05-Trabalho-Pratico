@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 
-import Cards from './Cards';
+import Cards from '../components/Cards';
 
 import * as api from '../api/books';
 import { prepareBookList } from '../helper/books';

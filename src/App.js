@@ -9,9 +9,8 @@ import {
 import Container from 'react-bootstrap/Container';
 
 import TopNavBar from './components/TopNavBar';
-import Shelfs from './components/Shelfs';
-
-import SearchList from './components/SearchList';
+import Shelfs from './pages/Shelfs';
+import SearchList from './pages/SearchList';
 
 import * as api from './api/books';
 import { prepareBookList } from './helper/books';
