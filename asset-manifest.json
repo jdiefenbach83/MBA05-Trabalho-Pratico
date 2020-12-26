@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/MBA05-Trabalho-Pratico/static/css/main.ab7136cd.chunk.css",
+    "main.js": "/MBA05-Trabalho-Pratico/static/js/main.c67c782b.chunk.js",
+    "main.js.map": "/MBA05-Trabalho-Pratico/static/js/main.c67c782b.chunk.js.map",
+    "runtime-main.js": "/MBA05-Trabalho-Pratico/static/js/runtime-main.14018cfd.js",
+    "runtime-main.js.map": "/MBA05-Trabalho-Pratico/static/js/runtime-main.14018cfd.js.map",
+    "static/css/2.20aa2d7b.chunk.css": "/MBA05-Trabalho-Pratico/static/css/2.20aa2d7b.chunk.css",
+    "static/js/2.bec77cf4.chunk.js": "/MBA05-Trabalho-Pratico/static/js/2.bec77cf4.chunk.js",
+    "static/js/2.bec77cf4.chunk.js.map": "/MBA05-Trabalho-Pratico/static/js/2.bec77cf4.chunk.js.map",
+    "static/js/3.a1f31c03.chunk.js": "/MBA05-Trabalho-Pratico/static/js/3.a1f31c03.chunk.js",
+    "static/js/3.a1f31c03.chunk.js.map": "/MBA05-Trabalho-Pratico/static/js/3.a1f31c03.chunk.js.map",
+    "index.html": "/MBA05-Trabalho-Pratico/index.html",
+    "static/css/2.20aa2d7b.chunk.css.map": "/MBA05-Trabalho-Pratico/static/css/2.20aa2d7b.chunk.css.map",
+    "static/css/main.ab7136cd.chunk.css.map": "/MBA05-Trabalho-Pratico/static/css/main.ab7136cd.chunk.css.map",
+    "static/js/2.bec77cf4.chunk.js.LICENSE.txt": "/MBA05-Trabalho-Pratico/static/js/2.bec77cf4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.14018cfd.js",
+    "static/css/2.20aa2d7b.chunk.css",
+    "static/js/2.bec77cf4.chunk.js",
+    "static/css/main.ab7136cd.chunk.css",
+    "static/js/main.c67c782b.chunk.js"
+  ]
+}
