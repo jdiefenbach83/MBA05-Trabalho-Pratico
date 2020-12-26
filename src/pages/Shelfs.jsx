@@ -3,7 +3,6 @@ import { React } from 'react';
 import { connect } from 'react-redux';
 
 //Internal imports
-//import { fetchBooks } from '../redux/actions/booksActions';
 import Spinner from 'react-bootstrap/Spinner';
 import Cards from '../components/Cards';
 

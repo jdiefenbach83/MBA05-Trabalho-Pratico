@@ -2,14 +2,13 @@
 import { React, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
 
 //Internal imports
-import * as api from '../api/books';
+import { updateBook } from '../redux/actions/booksActions';
 
-function ActionButtons({ book, shelf, books, loading, hasErrors }) {
+function ActionButtons({ dispatch, book, shelf, books }) {
   const [currentShelf, setCurrentShelf] = useState('');
 
   const [isCurrentlyReading, setCurrentlyReading] = useState(false);
@@ -18,7 +17,7 @@ function ActionButtons({ book, shelf, books, loading, hasErrors }) {
 
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const currentBook = !!shelf ? books.find((item) => item.id === book.id) : '';  
+  const currentBook = !!shelf ? books?.find((item) => item.id === book.id) : '';  
   
   useEffect(() => {    
     if (!!currentBook) {
@@ -67,13 +66,16 @@ function ActionButtons({ book, shelf, books, loading, hasErrors }) {
   const updateShelf = (shelf) => {
     setIsUpdating(true);
 
-    api.update(book, shelf).then((data) => {
+    const update = async () => { 
       const updatedBook = Object.assign({}, book);
       updatedBook.shelf = shelf;
 
-      //updateOneBook(updatedBook);
+      await dispatch(updateBook(updatedBook));
+
       setIsUpdating(false);
-    });
+    }
+
+    update();
   };
 
   const handleAddToCurrentlyReading = (e) => {
@@ -163,9 +165,7 @@ const styles = {
 
 // Map Redux state to React component props
 const mapStateToProps = (state, ownProps) => ({
-  books: state.books.books,  
-  loading: state.books.loading,
-  hasErrors: state.books.hasErrors,
+  books: state.books.books,    
   shelf: ownProps.shelf ?? 'search'
 });
 

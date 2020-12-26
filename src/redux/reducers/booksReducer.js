@@ -18,6 +18,17 @@ export default function booksReducer(state = initialState, action) {
     case actions.GET_BOOKS_FAILURE:
       return {...state, loading: false, hasErrors: true};
 
+    case actions.SAVE_BOOK:      
+      return {...state, loading: false};
+
+    case actions.SAVE_BOOK_SUCCESS:      
+      const filteredBooks = state.books.filter(item => item.id !== action.payload.book.id);      
+      const newBooks = [action.payload.book, ...filteredBooks];          
+      return {books: newBooks, loading: false, hasErrors: false};
+
+    case actions.SAVE_BOOK_FAILURE:
+      return {...state, loading: false, hasErrors: true};
+
     default:
       return state;
   }
