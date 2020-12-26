@@ -71,8 +71,6 @@ function ActionButtons({ dispatch, book, shelf, books }) {
       updatedBook.shelf = shelf;
 
       await dispatch(updateBook(updatedBook));
-
-      setIsUpdating(false);
     }
 
     update();
