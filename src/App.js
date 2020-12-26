@@ -1,4 +1,5 @@
-import { React, useState } from 'react';
+//External imports
+import { React, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,6 +9,10 @@ import {
 
 import Container from 'react-bootstrap/Container';
 
+//Internal imports
+import store from './store'; 
+import { fetchBooks } from './redux/actions/booksActions';
+
 import TopNavBar from './components/TopNavBar';
 import Shelfs from './pages/Shelfs';
 import SearchList from './pages/SearchList';
@@ -16,13 +21,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
-  const [globalBooks, setGlobalBooks] = useState([]);
+  useEffect(() => {
+    store.dispatch(fetchBooks());
 
-  const updateOneBook = (book) => {
-    const filteredBooks = globalBooks.filter((item) => item.id !== book.id);
-
-    setGlobalBooks([...filteredBooks, book]);
-  };
+  }, []);
 
   return (
     <>
@@ -42,10 +44,7 @@ function App() {
                 exact
                 path="/search/:criteria"
                 render={() => (
-                  <SearchList
-                    currentBooks={globalBooks}
-                    updateOneBook={updateOneBook}
-                  />
+                  <SearchList />
                 )}
               />
               <Redirect to="/" />

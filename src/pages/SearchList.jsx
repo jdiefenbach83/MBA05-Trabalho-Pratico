@@ -7,7 +7,7 @@ import Cards from '../components/Cards';
 import * as api from '../api/books';
 import { prepareBookList } from '../helper/books';
 
-export default function SearchList({ currentBooks, updateOneBook }) {
+export default function SearchList() {
   const { criteria } = useParams();
   const [books, setBooks] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -24,8 +24,6 @@ export default function SearchList({ currentBooks, updateOneBook }) {
     return (
       <Cards
         books={books}
-        currentBooks={currentBooks}
-        updateOneBook={updateOneBook}
       />
     );
   };

@@ -1,10 +1,15 @@
+//External imports
 import { React, useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+
+
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
 
+//Internal imports
 import * as api from '../api/books';
 
-export default function ActionButtons({ book, currentBook, updateOneBook }) {
+function ActionButtons({ book, shelf, books, loading, hasErrors }) {
   const [currentShelf, setCurrentShelf] = useState('');
 
   const [isCurrentlyReading, setCurrentlyReading] = useState(false);
@@ -13,7 +18,9 @@ export default function ActionButtons({ book, currentBook, updateOneBook }) {
 
   const [isUpdating, setIsUpdating] = useState(false);
 
-  useEffect(() => {
+  const currentBook = !!shelf ? books.find((item) => item.id === book.id) : '';  
+  
+  useEffect(() => {    
     if (!!currentBook) {
       setCurrentShelf(currentBook.shelf);
 
@@ -64,7 +71,7 @@ export default function ActionButtons({ book, currentBook, updateOneBook }) {
       const updatedBook = Object.assign({}, book);
       updatedBook.shelf = shelf;
 
-      updateOneBook(updatedBook);
+      //updateOneBook(updatedBook);
       setIsUpdating(false);
     });
   };
@@ -153,3 +160,14 @@ const styles = {
     color: 'green',
   },
 };
+
+// Map Redux state to React component props
+const mapStateToProps = (state, ownProps) => ({
+  books: state.books.books,  
+  loading: state.books.loading,
+  hasErrors: state.books.hasErrors,
+  shelf: ownProps.shelf ?? 'search'
+});
+
+// Connect Redux to React
+export default connect(mapStateToProps)(ActionButtons)

@@ -1,13 +1,13 @@
 import { Card, CardColumns } from 'react-bootstrap';
 import ActionButtons from './ActionButtons';
 
-export default function Cards({ books, shelf, currentBooks, updateOneBook }) {
+export default function Cards({ books, shelf }) {
   const localBooks = !shelf
     ? books
     : books.filter((book) => book.shelf === shelf);
 
   const cards = localBooks.map((book) => {
-    const currentBook = currentBooks?.find((item) => item.id === book.id);
+    //const currentBook = currentBooks?.find((item) => item.id === book.id);
 
     return (
       <Card style={{ width: '18rem' }} key={book.id}>
@@ -23,8 +23,6 @@ export default function Cards({ books, shelf, currentBooks, updateOneBook }) {
         <Card.Footer>
           <ActionButtons
             book={book}
-            currentBook={currentBook}
-            updateOneBook={updateOneBook}
           />
         </Card.Footer>
       </Card>

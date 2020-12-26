@@ -1,17 +1,13 @@
 //External imports
-import { React, useEffect } from 'react';
+import { React } from 'react';
 import { connect } from 'react-redux';
 
 //Internal imports
-import { fetchBooks } from '../redux/actions/booksActions';
+//import { fetchBooks } from '../redux/actions/booksActions';
 import Spinner from 'react-bootstrap/Spinner';
 import Cards from '../components/Cards';
 
-const Shelfs = ({ dispatch, books, loading, hasErrors }) => {
-  useEffect(() => {
-    dispatch(fetchBooks());
-
-  }, [dispatch]);
+const Shelfs = ({ books, loading, hasErrors }) => {
   
   // Show loading, error, or success state
   const renderBooks = () => {
@@ -29,19 +25,16 @@ const Shelfs = ({ dispatch, books, loading, hasErrors }) => {
         { <Cards
           books={books}
           shelf="currentlyReading"
-          //updateOneBook={updateOneBook}
         />}
         <h1>Quero ler</h1>
         { <Cards
           books={books}
           shelf="wantToRead"
-          //updateOneBook={updateOneBook}
         />}
         <h1>Leitura concluída</h1>
         { <Cards 
           books={books} 
           shelf="read" 
-          //updateOneBook={updateOneBook} 
         />}
       </>
     ); 
